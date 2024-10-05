@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20 # Use Node.js version 20
+    commands:
+      - echo Installing dependencies...
+      - npm install # Install project dependencies
+
+  build:
+    commands:
+      - echo Building the app...
+
+  post_build:
+    commands:
+      - echo Preparing to deploy to Elastic Beanstalk...
+      - echo Creating a zip file for deployment...
+      - echo Deploying to Elastic Beanstalk...
+artifacts:
+  files:
+    - '**/*' # Optionally include the zip file in the artifacts
