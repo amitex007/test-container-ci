@@ -30,7 +30,7 @@ async function ecrLoginToken(){
 }
 
 async function dockerLogin() {
-    const token = await this.ecrLoginToken();
+    const token = await ecrLoginToken();
     const command = `echo ${token} | docker login --username AWS --password-stdin 676768860871.dkr.ecr.ap-south-1.amazonaws.com`;
     return new Promise((resolve, reject) => {
         exec(command, {}, (error, stdout, stderr) => {
