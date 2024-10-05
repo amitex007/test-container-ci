@@ -17,7 +17,7 @@ async function ecrLoginToken(){
         // ],
       };
 
-    const authTokenCommand = GetAuthorizationTokenCommand(input);
+    const authTokenCommand = new GetAuthorizationTokenCommand(input);
     const authorizationResponse = await ecrClient.send(authTokenCommand);
         const authData = authorizationResponse.authorizationData;
         if (authData && authData.length > 0) {
