@@ -5,12 +5,36 @@ const { DockerComposeEnvironment } = require("testcontainers");
 const app = express();
 const port = 8080;
 
+
+const { exec } = require('child_process');
+
+function runDockerCommand(command) {
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Stderr: ${stderr}`);
+            return;
+        }
+        console.log(`Output: ${stdout}`);
+    });
+}
+
+
+
 async function startContainer() {
   const env = await new DockerComposeEnvironment("./", "docker-compose.yml")
     .withStartupTimeout(120000)
     .up();
   return env;
 }
+
+app.get("/api/docker-status", (req, res) => {
+    runDockerCommand('docker ps');
+    res.send("Docker status checked");
+});
 
 app.get("/api/call-external", async (req, res) => {
     let envStart = null;
